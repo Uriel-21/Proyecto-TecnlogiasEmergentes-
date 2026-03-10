@@ -1,35 +1,33 @@
 import cv2
 
-# 1. Inicializar la captura de video
-# El argumento '0' indica que usaremos la cámara por defecto de la laptop/PC.
-cap = cv2.VideoCapture(0)
+def iniciar_camara():
+    cap = cv2.VideoCapture(0)
+    
+    if not cap.isOpened():
+        print("No se pudo abrir la cámara")
+        return
+        
+    print("Presionar tecla 'q' para cerrar")
+    
+    nombre_ventana = 'Cámara en Vivo'
+    cv2.namedWindow(nombre_ventana, cv2.WINDOW_AUTOSIZE)
+    
+    while True:
+        retornar, frame = cap.read()
+        
+        if not retornar: 
+            print('Error al recibir el frame')
+            break
+            
+        cv2.imshow(nombre_ventana, frame)
+        
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+        if cv2.getWindowProperty(nombre_ventana, cv2.WND_PROP_VISIBLE) < 1:
+            break
+            
+    cap.release()
+    cv2.destroyAllWindows()
 
-# Verificamos si la cámara se abrió correctamente
-if not cap.isOpened():
-    print("Error: No se pudo acceder a la cámara.")
-    exit()
-
-print("Presiona la tecla 'q' para cerrar la ventana.")
-
-while True:
-    # 2. Capturar frame a frame
-    # 'ret' es un booleano (True/False) que indica si el frame se leyó bien.
-    # 'frame' es la imagen capturada en ese instante.
-    ret, frame = cap.read()
-
-    if not ret:
-        print("Error al recibir el frame. Finalizando...")
-        break
-
-    # 3. Mostrar el resultado en una ventana
-    cv2.imshow('Cámara en Vivo', frame)
-
-    # 4. Condición de salida
-    # Espera 1 milisegundo a que se presione una tecla. 
-    # Si la tecla es 'q' (código ASCII), rompe el ciclo.
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-# 5. Liberar recursos
-cap.release()        # Libera el hardware de la cámara
-cv2.destroyAllWindows() # Cierra todas las ventanas de OpenCV
+if __name__ == '__main__':
+    iniciar_camara()
