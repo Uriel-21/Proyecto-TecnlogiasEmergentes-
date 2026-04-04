@@ -20,3 +20,19 @@ def Conexion ():
         return None
 
 Conexion()
+
+def BuscarCarroQR(conexion, idDetectado):
+    
+    try: 
+        cursor = conexion.cursor()
+        query = "SELECT placa, marca, modelo, color, estatus_legar, dueño, verificacion FROM datos_auto WHERE idAuto = %s"
+        cursor.execute(query, [idDetectado])
+        
+        datos = cursor.fetchone()
+        cursor.close()
+        
+        return datos
+        
+    except Exception as e:
+        print(f"Error al consultar la base de datos {e}")
+        return None
