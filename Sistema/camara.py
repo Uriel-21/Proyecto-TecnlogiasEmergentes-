@@ -72,7 +72,7 @@ def iniciar_camara():
                             motivoInfraccion += " Y VEHICULO SIN VERIFICACIÓN"
                             
                             # crearMulta(placa, marca, modelo, dueño, motivoInfraccion, color)
-                            procesarReporte(placa, marca, modelo, dueño, motivoInfraccion, color)
+                        procesarReporte(placa, marca, modelo, dueño, motivoInfraccion, color)
                        
                 else:
                     print("ALERTA: QR no registrado.")
